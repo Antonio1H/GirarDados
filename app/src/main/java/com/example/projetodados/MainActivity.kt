@@ -3,11 +3,13 @@ package com.example.projetodados
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projetodados.ui.theme.ProjetoDadosTheme
@@ -68,6 +70,38 @@ fun DiceGameScreen() {
         Text(text = "Vitórias: $totalWins/$totalRolls = $winPercentage%")
     }
 }
+@Composable
+fun DiceImages(dice1: Int, dice2: Int) {
+    Row(
+        modifier = Modifier.padding(16.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = getDiceImage(dice1)),
+            contentDescription = "Dado 1",
+            modifier = Modifier.size(100.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Image(
+            painter = painterResource(id = getDiceImage(dice2)),
+            contentDescription = "Dado 2",
+            modifier = Modifier.size(100.dp)
+        )
+    }
+}
+
+fun getDiceImage(diceValue: Int): Int {
+    return when (diceValue) {
+        1 -> R.drawable.dado1
+        2 -> R.drawable.dado2
+        3 -> R.drawable.dado3
+        4 -> R.drawable.dado4
+        5 -> R.drawable.dado5
+        6 -> R.drawable.dado6
+        else -> R.drawable.dado1
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
