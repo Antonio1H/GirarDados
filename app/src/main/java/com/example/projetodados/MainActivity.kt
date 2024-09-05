@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projetodados.ui.theme.ProjetoDadosTheme
 
@@ -29,6 +30,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DiceGameScreen() {
+    var dice1 by remember { mutableStateOf(1) }
+    var dice2 by remember { mutableStateOf(1) }
+    var totalRolls by remember { mutableStateOf(0) }
+    var totalWins by remember { mutableStateOf(0) }
+    var gameResult by remember { mutableStateOf("") }
+
+    fun rollDice() {
+        dice1 = (1..6).random()
+        dice2 = (1..6).random()
+        totalRolls++
+
+        val sum = dice1 + dice2
+        if (sum == 7 || sum == 11) {
+            totalWins++
+            gameResult = "Ganhou!"
+        } else {
+            gameResult = "Perdeu!"
+        }
+    }
+
+    val winPercentage = if (totalRolls > 0) (totalWins.toFloat() / totalRolls * 100).toInt() else 0
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,6 +59,20 @@ fun DiceGameScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Tela do Jogo de Dados")
+        Button(onClick = { rollDice() }) {
+            Text(text = "Jogar")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Resultado: $gameResult")
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Vitórias: $totalWins/$totalRolls = $winPercentage%")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    ProjetoDadosTheme {
+        DiceGameScreen()
     }
 }
