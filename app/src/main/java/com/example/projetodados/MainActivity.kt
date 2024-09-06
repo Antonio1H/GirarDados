@@ -61,6 +61,8 @@ fun DiceGameScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        DiceImages(dice1, dice2)
+        Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { rollDice() }) {
             Text(text = "Jogar")
         }
